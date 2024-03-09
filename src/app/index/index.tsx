@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
+
+import { router } from "expo-router";
 
 import { styles } from "./styles";
 
 import { Ingredient } from "@/components/Ingredient";
+import { Selected } from "@/components/Selected";
 
 export function Index() {
 	const [selected, setSelected] = useState<string[]>([]);
@@ -15,6 +18,17 @@ export function Index() {
 			);
 		}
 		setSelected((state) => [...state, value]);
+	}
+
+	function handleClearSelected() {
+		Alert.alert("Limpar", "Deseja limpar tudo?", [
+			{ text: "Não", style: "cancel" },
+			{ text: "Sim", onPress: () => setSelected([]) },
+		]);
+	}
+
+	function handleSearch() {
+		router.navigate("/recipes/");
 	}
 
 	return (
@@ -41,6 +55,13 @@ export function Index() {
 					/>
 				))}
 			</ScrollView>
+			{selected.length > 0 && (
+				<Selected
+					quantity={selected.length}
+					onClear={handleClearSelected}
+					onSearch={handleSearch}
+				/>
+			)}
 		</View>
 	);
 }

@@ -1,29 +1,26 @@
-import { Image, Pressable, PressableProps, Text } from "react-native";
+import { Text, Pressable, PressableProps, Image } from "react-native"
 
-import { styles } from "./styles";
+import { styles } from "./styles"
 
-export type IgredientProps = {
-	name: string;
-	image: string;
-	selected?: boolean;
-};
+export type IngredientsProps = {
+  name: string
+  image: string
+  selected?: boolean
+}
 
 export function Ingredient({
-	name,
-	image,
-	selected = false,
-	...rest
-}: IgredientProps & PressableProps) {
-	return (
-		<Pressable
-			style={[styles.container, selected && styles.selected]}
-			{...rest}
-		>
-			<Image
-				style={styles.image}
-				source={require("@/assets/tomato.png")}
-			/>
-			<Text style={styles.title}>Maçã</Text>
-		</Pressable>
-	);
+  name,
+  image,
+  selected = false,
+  ...rest
+}: IngredientsProps & PressableProps) {
+  return (
+    <Pressable
+      style={[styles.container, selected && styles.selected]}
+      {...rest}
+    >
+      <Image source={{ uri: image }} style={styles.image} />
+      <Text style={styles.title}>{name}</Text>
+    </Pressable>
+  )
 }
